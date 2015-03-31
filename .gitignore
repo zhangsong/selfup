@@ -27,3 +27,6 @@ _testmain.go
 test-results/
 tmp/
 routes/
+
+#vim ignore
+*~

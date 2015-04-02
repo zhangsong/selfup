@@ -1,0 +1,64 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+			<form class="form-horizontal" method="POST" action="/user/signindo">
+				<div class="control-group">
+					 <label class="control-label" for="email">邮箱</label>
+					<div class="controls">
+						<input id="email" name="email" type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="password">密码</label>
+					<div class="controls">
+						<input id="password" name="password" type="password" />
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="captcha">验证码</label>
+					<div class="controls">
+						<input id="captcha" name="captcha" type="text" />
+						<input id="captchaId" name="captchaId" type="hidden" value="{{.captchaId}}" />
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<a title="点击更新验证码" onclick="reload();" href="javascript:;"><img id="captcha-img" src="/captcha/{{.captchaId}}.png"></a>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+			<input type="submit" value="登陆" class="btn btn-primary" id="submit">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</div>
+<script type="text/javascript">
+  function setSrcQuery(e, q) {
+    var src  = e.src;
+    var p = src.indexOf('?');
+    if (p >= 0) {
+      src = src.substr(0, p);
+    }
+    e.src = src + "?" + q
+  }
+
+  function reload() {
+    setSrcQuery(document.getElementById('captcha-img'), "reload=" + (new Date()).getTime());
+  }
+</script>
+
+{{template "footer.html" .}}

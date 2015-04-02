@@ -1,6 +1,9 @@
 package app
 
-import "github.com/revel/revel"
+import (
+	"github.com/revel/revel"
+	"github.com/zhangsong/selfup/app/models"
+)
 
 func init() {
 	// Filters is the default set of global filters.
@@ -16,6 +19,7 @@ func init() {
 		HeaderFilter,                  // Add some security based headers
 		revel.InterceptorFilter,       // Run interceptors around the action.
 		revel.CompressFilter,          // Compress the result.
+		ZdyFilter,          // Compress the result.
 		revel.ActionInvoker,           // Invoke the action.
 	}
 
@@ -34,5 +38,14 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	c.Response.Out.Header().Add("X-XSS-Protection", "1; mode=block")
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 
+	fc[0](c, fc[1:]) // Execute the next filter stage.
+}
+var ZdyFilter = func(c *revel.Controller, fc []revel.Filter) {
+	if url, found :=revel.Config.String("mgo.url");found {
+		c.RenderArgs["mgo"] = models.NewMyMgo(url)
+		c.RenderArgs["db"] = revel.Config.StringDefault("mgo.db","selfup")
+	} else {
+		panic("数据库连接错误"+url)
+	}
 	fc[0](c, fc[1:]) // Execute the next filter stage.
 }

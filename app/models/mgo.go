@@ -16,6 +16,11 @@ func (m myMgo)DB(db string) *mgo.Database {
 	return m.GetInstance().DB(db)
 }
 
+type MyMgo interface {
+	GetInstance() *mgo.Session
+	DB(string) *mgo.Database
+}
+
 
 func NewMyMgo(url string) myMgo {
    var session *mgo.Session

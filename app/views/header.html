@@ -46,6 +46,11 @@
 								<li>
 									<a href="/members/index">会员</a>
 								</li>
+								{{if .isLogin}}
+								<li>
+								<a href="/members/index">{{.user.Username}}</a>
+								</li>
+								{{end}}
 								<li class="dropdown">
 									 <a data-toggle="dropdown" class="dropdown-toggle" href="#">下拉菜单<strong class="caret"></strong></a>
 									<ul class="dropdown-menu">

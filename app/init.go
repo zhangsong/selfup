@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/revel/revel"
 	"github.com/zhangsong/selfup/app/models"
+	"gopkg.in/mgo.v2/bson"
 )
 
 func init() {
@@ -46,6 +47,20 @@ var ZdyFilter = func(c *revel.Controller, fc []revel.Filter) {
 		c.RenderArgs["db"] = revel.Config.StringDefault("mgo.db","selfup")
 	} else {
 		panic("数据库连接错误"+url)
+	}
+
+	c.RenderArgs["isLogin"] = false
+	if models.IsLogin(c.Session) {
+		db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
+		user := models.User{}
+		err := db.C(models.USERS).Find(bson.M{"email":c.Session["email"]}).One(&user)
+		if err != nil {
+			panic("no found user")
+			return
+		}
+		c.RenderArgs["isLogin"] = true
+		c.RenderArgs["user"] = user
+
 	}
 	fc[0](c, fc[1:]) // Execute the next filter stage.
 }

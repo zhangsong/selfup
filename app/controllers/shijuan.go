@@ -80,3 +80,25 @@ func (c Shijuan) Ask() revel.Result {
 	c.RenderArgs["ask"] = ee
 	return c.Render()
 }
+func (c Shijuan) Ceyan() revel.Result {
+	if c.Request.Method != "POST" {
+		return c.Redirect("/")
+	}
+
+	db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
+	var els models.Shijuan
+	if err := db.C(models.SJ).Find(bson.M{"_id":bson.ObjectIdHex(c.Params.Get("id"))}).One(&els); err != nil {
+		return c.Redirect("/")
+	}
+//成绩判定
+id := bson.NewObjectId()
+err := db.C(models.CJ).Insert(&models.Chengji{
+		Id_:id,
+		Count:0,
+		ShijuanId:c.Params.Get("id"),
+	})
+	if err != nil {
+		return c.Redirect("/")
+	}
+	return c.Redirect("/chengji/index")
+}

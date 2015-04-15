@@ -14,12 +14,12 @@
 			{{$a :=.}}
 			{{with .ask}}
 			<form action="/shijuan/ceyan" method="POST">
-			<ul>
+			<ol>
 			
 				{{range .}}
-				<li>{{.Content}}</li>
+				<li>{{.Htmlcontent}}<input type="hidden" name="sub[]" value="{{.Element.Id_.Hex}}" /></li>
 				{{end}}
-			</ul>
+			</ol>
 			<input type="SUBMIT" value="答题" />
 			<input type="hidden" name="id" value="{{$a.shijuan.Id_.Hex}}" />
 			</form>

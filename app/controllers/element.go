@@ -6,6 +6,7 @@ import (
 	"strings"
 	"fmt"
 	"io"
+	"encoding/json"
 	"crypto/sha1"
 	//"errors"
 	"gopkg.in/mgo.v2/bson"
@@ -38,6 +39,14 @@ func (c Element) Adddo() revel.Result {
 		return c.Redirect("/element/add")
 	}
 
+	daan := models.GetAanda(el)
+	var dd string
+	if bb,err :=json.Marshal(daan); err != nil || len(bb)==0 {
+		return c.Redirect("/")
+	} else {
+		dd = string(bb)
+	}
+
 	h := sha1.New()
 	io.WriteString(h, el)
 	db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
@@ -46,6 +55,7 @@ func (c Element) Adddo() revel.Result {
 		Id_:id,
 		Content:el,
 		Hash:fmt.Sprintf("%x",h.Sum(nil)),
+		Aanda:dd,
 	})
 
 	if err != nil {

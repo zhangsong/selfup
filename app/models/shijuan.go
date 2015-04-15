@@ -14,3 +14,7 @@ type Shijuan struct {
 	Content string
 }
 
+type Juger interface {
+	Juge(eid string, daan []string)([]string, bool)
+}
+

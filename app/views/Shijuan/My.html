@@ -15,7 +15,14 @@
 			<ul>
 				
 				{{range .}}
-				<li>{{.Content}}<a href="/shijuan/ask/{{.Id_.Hex}}">去答题</a></li>
+				<li>
+				{{if .Name}}
+				{{.Name}}
+				{{else}}
+				{{.Content}}
+				{{end}}
+				
+				<a href="/shijuan/ask/{{.Id_.Hex}}">去答题</a></li>
 				{{end}}
 			
 			

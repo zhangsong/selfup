@@ -66,7 +66,7 @@ func (c Element) Adddo() revel.Result {
 func (c Element) My() revel.Result {
 	db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
 	var els []models.Element
-	db.C(models.EL).Find(nil).All(&els)
+	db.C(models.EL).Find(nil).Sort("-_id").All(&els)
 	c.RenderArgs["list"] = els
 	return c.Render()
 }

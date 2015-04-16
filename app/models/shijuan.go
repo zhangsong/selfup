@@ -12,6 +12,7 @@ import (
 type Shijuan struct {
 	Id_             bson.ObjectId `bson:"_id"`
 	Content string
+	Name string
 }
 
 type Juger interface {

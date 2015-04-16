@@ -4,6 +4,7 @@ import (
 	"github.com/revel/revel"
 	"github.com/zhangsong/selfup/app/models"
 	"fmt"
+	"strings"
 	"encoding/json"
 	"html/template"
 	"gopkg.in/mgo.v2/bson"
@@ -26,7 +27,7 @@ func (c Shijuan) My() revel.Result {
 
 	db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
 	var els []models.Shijuan
-	db.C(models.SJ).Find(nil).All(&els)
+	db.C(models.SJ).Find(nil).Sort("-_id").All(&els)
 	c.RenderArgs["list"] = els
 	return c.Render()
 }
@@ -43,11 +44,16 @@ func (c Shijuan) Adddo(shijuan []string) revel.Result {
 	c.RenderArgs["list"] = els
 	*/
 	if mb, err := json.Marshal(shijuan); err == nil {
+		var name string
+		if c.Params.Get("makename") == "name" && len(strings.TrimSpace(c.Params.Get("shijuanname")))>0 {
+			name = strings.TrimSpace(c.Params.Get("shijuanname"))
+		}
 		db := c.RenderArgs["mgo"].(models.MyMgo).DB(c.RenderArgs["db"].(string))
 		id := bson.NewObjectId()
 		err = db.C(models.SJ).Insert(&models.Shijuan{
 			Id_:id,
 			Content:string(mb),
+			Name:name,
 		})
 		if err != nil {
 			return c.Redirect("/")

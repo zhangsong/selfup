@@ -15,6 +15,7 @@ GET 	/captcha/*filepath				Captcha.Index
 GET 	/members/delete/:username				Members.Delete
 GET 	/element/delete/:id				Element.Delete
 GET 	/shijuan/ask/:id				Shijuan.Ask
+GET 	/share/to/:id				Share.To
 
 # Catch all
 *       /:controller/:action                    :controller.:action

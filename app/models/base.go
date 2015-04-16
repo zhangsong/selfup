@@ -5,4 +5,5 @@ const (
 	EL ="element"
 	SJ ="shijuan"
 	CJ ="chengji"
+	SH ="share"
 )

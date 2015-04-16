@@ -10,26 +10,18 @@
 <div class="container">
 	<div class="row-fluid">
 		<div class="span12">
-			<form action="/shijuan/adddo" method="POST">
 			{{with .list}}
 			<ul>
 				
 				{{range .}}
-				<li><a href="/share/to/{{.Id_.Hex}}">[我要分享]</a>
-				{{if .Name}}
+				<li>
 				{{.Name}}
-				{{else}}
-				{{.Content}}
-				{{end}}
-				
-				<a href="/shijuan/ask/{{.Id_.Hex}}">去答题</a></li>
+				</li>
 				{{end}}
 			
 			
 			</ul>
 			{{end}}
-			<input type="SUBMIT" value="生成试卷" />
-			</form>
 		</div>
 	</div>
 

@@ -6,4 +6,5 @@ const (
 	SJ ="shijuan"
 	CJ ="chengji"
 	SH ="share"
+	LX ="lianxiang"
 )

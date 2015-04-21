@@ -22,7 +22,7 @@
 				{{.Content}}
 				{{end}}
 				
-				<a href="/shijuan/ask/{{.Id_.Hex}}">去答题</a></li>
+				<a href="/shijuan/ask/{{.Id_.Hex}}">去答题</a>[<a class="shows" lid="{{.Id_.Hex}}" href="/lianxiang/{{.Id_.Hex}}/type">联想</a>]</li>
 				{{end}}
 			
 			
@@ -33,9 +33,24 @@
 		</div>
 	</div>
 
-
 </div>
 <script type="text/javascript">
+	$(function(){
+			$(".shows").bind("mouseover", function(){
+				var lid = $(this).attr("lid");
+				var other = this;
+				$.ajax({
+					"type":"GET",
+					"url":"/lianxiang/"+lid,
+					"dataType":"json",
+					"success":function(res){
+					$(other).attr("title", res)
+					},
+					
+					});
+				
+				})	
+			});
   function setSrcQuery(e, q) {
     var src  = e.src;
     var p = src.indexOf('?');

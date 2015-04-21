@@ -16,6 +16,8 @@ GET 	/members/delete/:username				Members.Delete
 GET 	/element/delete/:id				Element.Delete
 GET 	/shijuan/ask/:id				Shijuan.Ask
 GET 	/share/to/:id				Share.To
+GET 	/lianxiang/:id/:type				Lianxiang.Index
+GET 	/lianxiang/:id				Lianxiang.Show
 
 # Catch all
 *       /:controller/:action                    :controller.:action
